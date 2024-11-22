@@ -7,6 +7,8 @@ const LoginModal = ({ setIsLoginModalOpen, setIsSignUpModalOpen }) => {
     password: "",
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const navigate = useNavigate();
 
   const handleInputChange = (e) => {
@@ -23,7 +25,7 @@ const LoginModal = ({ setIsLoginModalOpen, setIsSignUpModalOpen }) => {
     if (formData.username === "admin" && formData.password === "admin") {
       navigate("/customer");
     } else {
-      console.log("Kredensial tidak valid");
+      setErrorMessage("Username/password salah");
     }
   };
 
@@ -125,6 +127,11 @@ const LoginModal = ({ setIsLoginModalOpen, setIsSignUpModalOpen }) => {
                   </a>
                 </span>
               </div>
+
+              {/* Error Message */}
+              {errorMessage && (
+                <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+              )}
 
               {/* Submit Button */}
               <div className="flex mt-4">

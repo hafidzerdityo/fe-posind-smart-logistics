@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTachometerAlt,
@@ -223,9 +224,11 @@ const CustomerView = ({ setTheme, theme }) => {
                         <a href="#" className="btn btn-ghost w-full text-left">
                           Settings
                         </a>
-                        <a href="#" className="btn btn-ghost w-full text-left">
-                          Log Out
-                        </a>
+                        <Link to="/">
+                          <span className="btn btn-ghost w-full text-left">
+                            Log Out
+                          </span>
+                        </Link>
                       </div>
                     </div>
                   )}
