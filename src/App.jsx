@@ -60,14 +60,18 @@ function App() {
   }, [theme]);
 
   return (
-    <Router>
+    <Router future={{ v7_relativeSplatPath: true }}>
       <div data-theme={theme}>
         <Layout theme={theme} setTheme={setTheme}>
           <Routes>
             <Route path="/" element={<HomeView />} />
             <Route
               path="/customer"
-              element={<PrivateRoute element={<CustomerView />} />}
+              element={
+                <PrivateRoute
+                  element={<CustomerView setTheme={setTheme} theme={theme} />}
+                />
+              }
             />
             <Route path="*" element={<NotFound />} />
           </Routes>

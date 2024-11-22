@@ -23,7 +23,7 @@ const LoginModal = ({ setIsLoginModalOpen, setIsSignUpModalOpen }) => {
     if (formData.username === "admin" && formData.password === "admin") {
       navigate("/customer");
     } else {
-      console.log("Invalid credentials");
+      console.log("Kredensial tidak valid");
     }
   };
 
@@ -40,7 +40,7 @@ const LoginModal = ({ setIsLoginModalOpen, setIsSignUpModalOpen }) => {
         <dialog open className="modal z-2">
           <div className="modal-box p-10">
             <div className="flex justify-between items-center">
-              <h3 className="font-bold text-lg">Login</h3>
+              <h3 className="font-bold text-lg">Masuk</h3>
               <button
                 onClick={() => setIsLoginModalOpen(false)}
                 className="btn btn-square"
@@ -62,7 +62,7 @@ const LoginModal = ({ setIsLoginModalOpen, setIsSignUpModalOpen }) => {
               </button>
             </div>
             <p className="py-4">
-              Please enter your login credentials to access your account.
+              Silakan masukkan kredensial Anda untuk masuk.
             </p>
 
             {/* Form Start */}
@@ -81,7 +81,7 @@ const LoginModal = ({ setIsLoginModalOpen, setIsSignUpModalOpen }) => {
                   type="text"
                   name="username"
                   className="grow"
-                  placeholder="Username"
+                  placeholder="Nama Pengguna"
                   value={formData.username}
                   onChange={handleInputChange}
                   required
@@ -106,7 +106,7 @@ const LoginModal = ({ setIsLoginModalOpen, setIsSignUpModalOpen }) => {
                   type="password"
                   name="password"
                   className="grow"
-                  placeholder="Password"
+                  placeholder="Kata Sandi"
                   value={formData.password}
                   onChange={handleInputChange}
                   required
@@ -116,7 +116,7 @@ const LoginModal = ({ setIsLoginModalOpen, setIsSignUpModalOpen }) => {
               {/* Sign up prompt */}
               <div className="label">
                 <span className="label-text-alt">
-                  Belum Punya Akun?{" "}
+                  Belum punya akun?{" "}
                   <a
                     className="text-primary cursor-pointer"
                     onClick={handleDaftar}
@@ -129,7 +129,7 @@ const LoginModal = ({ setIsLoginModalOpen, setIsSignUpModalOpen }) => {
               {/* Submit Button */}
               <div className="flex mt-4">
                 <button type="submit" className="btn btn-primary ml-auto">
-                  Login
+                  Masuk
                 </button>
               </div>
             </form>

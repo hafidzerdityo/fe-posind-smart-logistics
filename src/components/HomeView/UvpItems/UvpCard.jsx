@@ -24,10 +24,11 @@ const UvpCard = () => {
               </h2>
             </div>
             <p className="text-sm text-justify">
-              PSL menawarkan layanan logistik yang sepenuhnya dapat disesuaikan
-              dengan kebutuhan bisnis Anda, mulai dari jadwal pengiriman hingga
-              pengemasan khusus. Kami hadir untuk mendukung dinamika bisnis Anda
-              dengan fleksibilitas tinggi dan nilai tambah di setiap pengiriman.
+              PLASTIK menawarkan layanan logistik yang sepenuhnya dapat
+              disesuaikan dengan kebutuhan bisnis Anda, mulai dari jadwal
+              pengiriman hingga pengemasan khusus. Kami hadir untuk mendukung
+              dinamika bisnis Anda dengan fleksibilitas tinggi dan nilai tambah
+              di setiap pengiriman.
             </p>
           </div>
         </div>

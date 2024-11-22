@@ -1,5 +1,5 @@
 import React from "react";
-import ServicesCard from "../utils/ServicesCard";
+import ServicesCard from "./ServicesItems/ServicesCard";
 
 const Services = () => {
   return (

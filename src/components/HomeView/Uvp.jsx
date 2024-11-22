@@ -1,5 +1,5 @@
 import React from "react";
-import UvpCard from "../utils/UvpCard";
+import UvpCard from "./UvpItems/UvpCard";
 
 const Uvp = () => {
   return (

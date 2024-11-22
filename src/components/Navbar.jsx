@@ -16,8 +16,8 @@ import {
   faMoon,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/POSIND_2023.svg.png";
-import LoginModal from "./utils/LoginModal";
-import SignUpModal from "./utils/SignUpModal";
+import LoginModal from "./HomeView/Login/LoginModal";
+import SignUpModal from "./HomeView/Signup/SignUpModal";
 
 const Navbar = ({ setTheme, theme }) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -127,7 +127,9 @@ const Navbar = ({ setTheme, theme }) => {
             />
           </Link>
           <Link to="/">
-            <a className="btn btn-ghost text-xl hidden lg:flex">{title}</a>
+            <span className="btn btn-ghost text-xl hidden lg:flex">
+              {title}
+            </span>
           </Link>
         </div>
 

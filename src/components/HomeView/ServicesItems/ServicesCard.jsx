@@ -21,7 +21,7 @@ const ServicesCard = () => {
             </div>
             <ul className="text-sm list-disc list-inside">
               <li>Pesan Sesuai Kebutuhan</li>
-              <li>Real-Time Tracker</li>
+              <li>Real-Time Tracker Berbasis IoT pada kiriman sensitif</li>
               <li>Integrasi Logistik</li>
             </ul>
           </div>
@@ -36,7 +36,10 @@ const ServicesCard = () => {
               </h2>
             </div>
             <ul className="text-sm list-disc list-inside">
-              <li>Penyimpanan, Pengambilan, Pengemasan, dan Pengiriman</li>
+              <li>
+                Penyimpanan, Pengambilan, Pengemasan, dan Pengiriman via drop
+                off points
+              </li>
               <li>Pemrosesan Pesanan dan E-Fulfillment</li>
               <li>Manajemen Pengiriman dan Pengembalian Barang</li>
               <li>Dashboard Management System</li>
