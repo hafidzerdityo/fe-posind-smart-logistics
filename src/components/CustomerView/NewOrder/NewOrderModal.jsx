@@ -5,6 +5,9 @@ import {
   faTruck,
   faBoxOpen,
   faNetworkWired,
+  faBuilding,
+  faShoppingCart,
+  faTools,
   faExpandAlt,
   faCompressAlt,
 } from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +20,11 @@ const NewOrderModal = ({ setNewOrderModal }) => {
 
   const services = [
     {
+      name: "Courier & Cargo Solutions",
+      icon: faNetworkWired,
+      key: "courier_and_cargo_solutions",
+    },
+    {
       name: "Warehousing Solutions",
       icon: faWarehouse,
       key: "warehousing_solutions",
@@ -27,22 +35,32 @@ const NewOrderModal = ({ setNewOrderModal }) => {
       key: "transport_solutions",
     },
     {
+      name: "Real Estate Solutions",
+      icon: faBuilding,
+      key: "real_estate_solutions",
+    },
+    {
       name: "Packaging Solutions",
       icon: faBoxOpen,
       key: "packaging_solutions",
     },
     {
-      name: "End to End Logistics",
-      icon: faNetworkWired,
-      key: "end_to_end_logistics",
+      name: "Service Logistics",
+      icon: faTools,
+      key: "service_logistics",
+    },
+    {
+      name: "E-commerce Fulfillment Solutions",
+      icon: faShoppingCart,
+      key: "ecommerce_fulfillment_solutions",
     },
   ];
 
   const handleServiceSelection = (serviceKey) => {
-    if (serviceKey === "end_to_end_logistics") {
+    if (serviceKey === "courier_and_cargo_solutions") {
       setSelectedService(serviceKey);
     } else {
-      alert("services belum dibuat");
+      alert("Service belum dibuat");
     }
   };
 
@@ -119,8 +137,11 @@ const NewOrderModal = ({ setNewOrderModal }) => {
           )}
 
           {/* Steps */}
-          {selectedService === "end_to_end_logistics" && (
-            <EndToEndLogistics isFullscreen={isFullscreen} />
+          {selectedService === "courier_and_cargo_solutions" && (
+            <EndToEndLogistics
+              isFullscreen={isFullscreen}
+              setNewOrderModal={setNewOrderModal}
+            />
           )}
         </div>
       </div>

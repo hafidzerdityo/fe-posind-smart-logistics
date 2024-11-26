@@ -161,20 +161,6 @@ const Dashboard = () => {
 
   const stats = [
     {
-      id: 1,
-      title: "Users",
-      value: "1,250",
-      icon: <FaUser />,
-      bgColor: "bg-primary",
-    },
-    {
-      id: 2,
-      title: "Revenue",
-      value: "$12,345",
-      icon: <FaDollarSign />,
-      bgColor: "bg-secondary",
-    },
-    {
       id: 3,
       title: "Orders",
       value: "432",
@@ -183,8 +169,8 @@ const Dashboard = () => {
     },
     {
       id: 4,
-      title: "Growth",
-      value: "23%",
+      title: "Jumlah Order Tepat waktu",
+      value: "98%",
       icon: <FaChartLine />,
       bgColor: "bg-info",
     },
@@ -269,18 +255,18 @@ const Dashboard = () => {
       {/* put button here */}
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="flex flex-wrap">
         {stats.map((stat) => (
           <div
             key={stat.id}
-            className={`card shadow-md ${stat.bgColor} text-white`}
+            className={`card shadow-md ${stat.bgColor} text-white flex-1 m-2`}
           >
-            <div className="card-body flex items-center justify-between">
+            <div className="card-body flex flex-col items-center justify-center">
               <div>
-                <h2 className="text-lg font-bold">{stat.title}</h2>
-                <p className="text-2xl font-bold">{stat.value}</p>
+                <h2 className="text-lg font-bold text-center">{stat.title}</h2>
+                <p className="text-2xl font-bold text-center">{stat.value}</p>
               </div>
-              <div className="text-4xl">{stat.icon}</div>
+              <div className="text-4xl mt-2">{stat.icon}</div>
             </div>
           </div>
         ))}

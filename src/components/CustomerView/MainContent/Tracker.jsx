@@ -33,7 +33,6 @@ const Tracker = () => {
   ]);
 
   const routes = ["Route A", "Route B", "Route C"];
-
   useEffect(() => {
     const updateShipmentData = () => {
       setShipment((prev) => {
@@ -71,8 +70,12 @@ const Tracker = () => {
           : updatedHistory;
       });
 
-      // Simulate journey updates
+      // Simulate journey updates if journey length <= 6
       setJourney((prevJourney) => {
+        if (prevJourney.length > 6) {
+          return prevJourney; // Stop updating journey
+        }
+
         const newJourney = [...prevJourney];
         if (Math.random() < 0.1) {
           const event = {
@@ -89,7 +92,7 @@ const Tracker = () => {
 
     const intervalId = setInterval(() => {
       updateShipmentData();
-    }, 1000); // Update every 5 seconds for better visualization
+    }, 1000); // Update every second
 
     return () => clearInterval(intervalId);
   }, [shipment, routes]);
