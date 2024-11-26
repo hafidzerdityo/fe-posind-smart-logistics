@@ -20,7 +20,7 @@ const UvpCard = () => {
                 className="text-primary text-2xl mb-2"
               />
               <h2 className="card-title font-bold text-lg">
-                Kostumisasi Logistik
+                PERSONALISASI LAYANAN
               </h2>
             </div>
             <p className="text-sm text-justify">
@@ -42,7 +42,7 @@ const UvpCard = () => {
                 className="text-primary text-2xl mb-2"
               />
               <h2 className="card-title font-bold text-lg">
-                Visibilitas Penuh Terhadap Pesanan Anda
+                Tracking Real-Time Terhadap Pesanan Anda 24/7
               </h2>
             </div>
             <p className="text-sm text-justify">
@@ -62,33 +62,13 @@ const UvpCard = () => {
                 className="text-primary text-2xl mb-2"
               />
               <h2 className="card-title font-bold text-lg">
-                LLM Based Logistics
+                LLM BERBASIS API LANGSUNG KE PELANGGAN
               </h2>
             </div>
             <p className="text-sm text-justify">
               PLASTIK menyediakan BOT pintar berbasis LLM untuk membantu dalam
               pengecekan tarif dan pemesanan, membuat layanan logistik lebih
               efisien dan mudah diakses kapan saja.
-            </p>
-          </div>
-        </div>
-
-        {/* AI-Based Logistics */}
-        <div className="card bg-base-100 w-full shadow-xl">
-          <div className="card-body">
-            <div>
-              <FontAwesomeIcon
-                icon={faBrain}
-                className="text-primary text-2xl mb-2"
-              />
-              <h2 className="card-title font-bold text-lg">
-                Artificial Intelligence Based Logistics
-              </h2>
-            </div>
-            <p className="text-sm text-justify">
-              PLASTIK mengintegrasikan AI dan big data untuk meningkatkan
-              efisiensi logistik, menghadirkan solusi yang responsif terhadap
-              kebutuhan bisnis Anda yang dinamis.
             </p>
           </div>
         </div>
