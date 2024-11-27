@@ -5,9 +5,62 @@ import {
   faTruck,
   faBoxOpen,
   faNetworkWired,
+  faIceCream,
 } from "@fortawesome/free-solid-svg-icons";
 
+import Industri from "./Items/Industri";
+import MetodeKirim from "./Items/MetodeKirim";
+
 const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
+  // Industry
+  const industriList = [
+    {
+      name: "Consumer Goods",
+      icon: faWarehouse,
+      data: "consumer_goods",
+    },
+    {
+      name: "Frozen Goods",
+      icon: faIceCream,
+      data: "frozen_goods",
+    },
+    {
+      name: "Energy Chemicals and Engineering",
+      icon: faTruck,
+      data: "energy_chemicals",
+    },
+    {
+      name: "Life Science & Health Care",
+      icon: faBoxOpen,
+      data: "life_science_healthcare",
+    },
+    {
+      name: "Retail",
+      icon: faNetworkWired,
+      data: "retail",
+    },
+  ];
+  const [selectedIndustry, setSelectedIndustry] = useState("");
+  const selectedIndustryName =
+    industriList.find((item) => item.data === selectedIndustry)?.name || "None";
+  // End of Industry
+
+  // Metode Kirim
+  const [pickupMethod, setPickupMethod] = useState("");
+  const [scheduleOption, setScheduleOption] = useState("");
+  const [packaging, setPackaging] = useState("");
+  const packagingOptions = [
+    { data: "kardus", name: "Kardus (Carton Box)", price: 5000 },
+    { data: "polybag", name: "Polybag/Plastik", price: 3000 },
+    { data: "bubblewrap", name: "Bubble Wrap", price: 8000 },
+    { data: "parcelbok", name: "Parcel Box", price: 10000 },
+    { data: "petikayu", name: "Peti Kayu", price: 20000 },
+    { data: "khusus", name: "Kemasan Khusus (Barang Fragile)", price: 25000 },
+    { data: "thermalbox", name: "Thermal Box", price: 30000 },
+  ];
+
+  // End of Metode Kirim
+
   const [price, setPrice] = useState(0);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [packageDetails, setPackageDetails] = useState({
@@ -47,12 +100,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
     setPrice(totalPrice);
   }, [packageDetails]);
 
-  const [selectedIndustry, setSelectedIndustry] = useState("");
-  const [selectedPickUpMethod, setSelectedPickUpMethod] = useState("");
-
   const [progressStep, setProgressStep] = useState(1);
-  const [pickupMethod, setPickupMethod] = useState("");
-  const [scheduleOption, setScheduleOption] = useState("");
 
   const [selectedTransport, setSelectedTransport] = useState(""); // Default selection
   const [carouselIndex, setCarouselIndex] = useState(0); // Optional: to control carousel navigation
@@ -61,34 +109,6 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
     e.preventDefault();
     setSelectedTransport(e.target.value);
   };
-
-  const industriList = [
-    {
-      name: "Consumer Goods",
-      icon: faWarehouse,
-      data: "consumer_goods",
-    },
-    {
-      name: "Energy Chemicals and Engineering",
-      icon: faTruck,
-      data: "energy_chemicals",
-    },
-    {
-      name: "Life Science & Health Care",
-      icon: faBoxOpen,
-      data: "life_science_healthcare",
-    },
-    {
-      name: "Retail",
-      icon: faNetworkWired,
-      data: "retail",
-    },
-  ];
-
-  // Find the selected industry's name
-  const selectedIndustryName =
-    industriList.find((item) => item.data === selectedIndustry)?.name || "None";
-  // Find the selected industry's name
 
   const jenisAngkutan = [
     { name: "Angkutan Udara", data: "angkutan_udara" },
@@ -273,216 +293,24 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
         {/* Dynamic Form Content */}
         <form className="space-y-3 px-4 py-2">
           {progressStep === 1 && (
-            <div
-              className={`mb-10 px-3 border rounded-lg p-4 space-y-4 ${
-                isFullscreen && "w-1/2 mx-auto"
-              }`}
-            >
-              <label className="block text-sm font-medium mb-5">
-                Pilih Industri
-              </label>
-              <div className="mt-5 ">
-                <select
-                  className="select select-sm select-bordered w-1/2"
-                  value={selectedIndustry} // Bind the state
-                  onChange={(e) => setSelectedIndustry(e.target.value)} // Update state on change
-                >
-                  <option disabled value="">
-                    Pilih Industri yang tersedia
-                  </option>
-                  {industriList.map((solution, index) => (
-                    <option key={index} value={solution.data}>
-                      {solution.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+            <Industri
+              isFullscreen={isFullscreen}
+              industriList={industriList}
+              selectedIndustry={selectedIndustry}
+              setSelectedIndustry={setSelectedIndustry}
+            />
           )}
           {progressStep === 2 && (
-            <div
-              className={`mb-10 px-3 border rounded-lg p-4 space-y-4 ${
-                isFullscreen && "w-1/2 mx-auto"
-              }`}
-            >
-              <p className="block text-sm font-medium mb-1 ">
-                Pilih Metode Kirim
-              </p>
-
-              <div className="flex items-center space-x-4 ">
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="pickupMethod"
-                    value="drop_off"
-                    className="radio radio-sm radio-primary mr-2"
-                    onChange={() => setPickupMethod("drop_off")}
-                  />
-                  <span className="text-sm">Drop Off</span>
-                </label>
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="pickupMethod"
-                    value="pick_up"
-                    className="radio radio-sm radio-primary mr-2"
-                    onChange={() => setPickupMethod("pick_up")}
-                  />
-                  <span className="text-sm">Pick Up</span>
-                </label>
-              </div>
-
-              {pickupMethod === "drop_off" && (
-                <div className="mt-5 border rounded-lg p-4 space-y-3">
-                  <label className="block text-sm font-medium mb-1">
-                    Pilih Kantor Drop Off
-                  </label>
-                  <select className="select select-sm select-bordered w-full">
-                    <option disabled value="">
-                      Pilih Kantor
-                    </option>
-                    <option value="kantor_1">Kantor 1</option>
-                    <option value="kantor_2">Kantor 2</option>
-                    <option value="kantor_3">Kantor 3</option>
-                  </select>
-                </div>
-              )}
-
-              {pickupMethod === "pick_up" && (
-                <div className="mt-5 border rounded-lg p-4 space-y-4">
-                  <p className="text-sm font-medium mb-3">
-                    Lengkapi Data Pengirim untuk Pick Up
-                  </p>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">
-                      Nama
-                    </label>
-                    <input
-                      type="text"
-                      className="input input-sm input-bordered w-full"
-                      placeholder="Masukkan nama pengirim"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">
-                      Alamat
-                    </label>
-                    <textarea
-                      className="textarea textarea-sm textarea-bordered w-full"
-                      rows="2"
-                      placeholder="Masukkan alamat lengkap pengirim"
-                    ></textarea>
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">
-                      No. HP
-                    </label>
-                    <input
-                      type="text"
-                      className="input input-sm input-bordered w-full"
-                      placeholder="Masukkan nomor HP pengirim"
-                    />
-                  </div>
-
-                  {
-                    <div className="mt-5">
-                      {/* Sekarang or Terjadwal */}
-                      <label className="block text-sm font-medium mb-1">
-                        Pilih Jadwal
-                      </label>
-                      <div className="flex items-center space-x-4">
-                        <label className="flex items-center">
-                          <input
-                            type="radio"
-                            name="scheduleOption"
-                            value="sekarang"
-                            className="radio radio-sm radio-primary mr-2"
-                            onChange={() => setScheduleOption("sekarang")}
-                          />
-                          <span className="text-sm">Sekarang</span>
-                        </label>
-                        <label className="flex items-center">
-                          <input
-                            type="radio"
-                            name="scheduleOption"
-                            value="terjadwal"
-                            className="radio radio-sm radio-primary mr-2"
-                            onChange={() => setScheduleOption("terjadwal")}
-                          />
-                          <span className="text-sm">Terjadwal</span>
-                        </label>
-                      </div>
-
-                      {/* Terjadwal Options */}
-                      {scheduleOption === "terjadwal" && (
-                        <div className="mt-4 space-y-4 w-1/2">
-                          {/* <label className="block text-sm font-medium mb-1 ">
-                            Frekuensi
-                          </label>
-                          <select className="select select-sm select-bordered w-full">
-                            <option disabled selected value="">
-                              Pilih Frekuensi
-                            </option>
-                            <option value="daily">Harian</option>
-                            <option value="weekly">Mingguan</option>
-                            <option value="monthly">Bulanan</option>
-                          </select> */}
-
-                          <div>
-                            <label className="block text-sm font-medium mb-1">
-                              Di Pick Up Mulai Tanggal:
-                            </label>
-                            <input
-                              type="date"
-                              className="input input-sm input-bordered w-full"
-                            />
-                          </div>
-                          <div>
-                            <label className="block text-sm font-medium mb-1">
-                              Pilih Waktu:
-                            </label>
-                            <input
-                              type="time"
-                              className="input input-sm input-bordered w-full"
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  }
-                </div>
-              )}
-              <div className="mt-5 border rounded-lg p-4 space-y-3">
-                <label className="block text-sm font-medium mb-1">
-                  Pilih Packaging (Optional)
-                </label>
-                <select className="select select-sm select-bordered w-full">
-                  <option disabled value="">
-                    Pilih Packaging (Optional)
-                  </option>
-                  <option value="kardus">None</option>
-                  <option value="kardus">
-                    1. Kardus (Carton Box): Rp. 5.000/kg
-                  </option>
-                  <option value="polybag">
-                    2. Polybag/Plastik: Rp. 3.000/kg
-                  </option>
-                  <option value="bubblewrap">
-                    3. Bubble Wrap: Rp. 8.000/kg
-                  </option>
-                  <option value="parcelbok">
-                    4. Parcel Box: Rp. 10.000/kg
-                  </option>
-                  <option value="petikayu">5. Peti Kayu: Rp. 20.000/kg</option>
-                  <option value="khusus">
-                    6. Kemasan Khusus (Barang Fragile): Rp 25.000/kg
-                  </option>
-                  <option value="thermalbox">
-                    7. Thermal Box: Rp. 30.000/kg
-                  </option>
-                </select>
-              </div>
-            </div>
+            <MetodeKirim
+              isFullscreen={isFullscreen}
+              pickupMethod={pickupMethod}
+              setPickupMethod={setPickupMethod}
+              scheduleOption={scheduleOption}
+              setScheduleOption={setScheduleOption}
+              packaging={packaging}
+              setPackaging={setPackaging}
+              packagingOptions={packagingOptions}
+            />
           )}
 
           {progressStep === 3 && (
@@ -497,7 +325,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                     name="destination"
                     value={packageDetails.destination}
                     onChange={handlePackageDetailsChange}
-                    className="input input-bordered"
+                    className="input input-sm input-bordered"
                     placeholder="Masukkan tujuan pengiriman"
                   />
                 </div>
@@ -510,7 +338,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                     name="itemName"
                     value={packageDetails.itemName}
                     onChange={handlePackageDetailsChange}
-                    className="input input-bordered"
+                    className="input input-sm input-bordered"
                     placeholder="Masukkan nama barang"
                   />
                 </div>
@@ -525,7 +353,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                       packageDetails.weight === 0 ? "" : packageDetails.weight
                     }
                     onChange={handlePackageDetailsChange}
-                    className="input input-bordered"
+                    className="input input-sm input-bordered"
                     placeholder="Masukkan berat barang"
                   />
                 </div>
@@ -542,7 +370,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                         packageDetails.length === 0 ? "" : packageDetails.length
                       }
                       onChange={handlePackageDetailsChange}
-                      className="input input-bordered"
+                      className="input input-sm input-bordered"
                       placeholder="Panjang (cm)"
                     />
                     {/* Width */}
@@ -553,7 +381,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                         packageDetails.width === 0 ? "" : packageDetails.width
                       }
                       onChange={handlePackageDetailsChange}
-                      className="input input-bordered"
+                      className="input input-sm input-bordered"
                       placeholder="Lebar (cm)"
                     />
                     {/* Height */}
@@ -564,7 +392,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                         packageDetails.height === 0 ? "" : packageDetails.height
                       }
                       onChange={handlePackageDetailsChange}
-                      className="input input-bordered"
+                      className="input  input-sm input-bordered"
                       placeholder="Tinggi (cm)"
                     />
                   </div>
@@ -749,7 +577,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
             </div>
           )}
           {progressStep === 6 && (
-            <div className="p-4">
+            <div className={isFullscreen && "w-1/2 mx-auto"}>
               <h3 className="font-bold text-xl mb-6">Receipt</h3>
               <div className="mt-5 border rounded-lg p-4 space-y-4">
                 {/* Display Details */}
@@ -759,8 +587,24 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="font-semibold">Metode Pick-Up:</span>
-                  <span>{selectedPickUpMethod || "N/A"}</span>
+                  <span>
+                    {pickupMethod
+                      .replace(/_/g, " ")
+                      .replace(/\b\w/g, (char) => char.toUpperCase()) || "N/A"}
+                  </span>
                 </div>
+                {packaging && (
+                  <div className="flex justify-between items-center">
+                    <span className="font-semibold">Packaging:</span>
+                    <span>
+                      {packaging
+                        .replace(/_/g, " ")
+                        .replace(/\b\w/g, (char) => char.toUpperCase()) ||
+                        "N/A" ||
+                        "N/A"}
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between items-center">
                   <span className="font-semibold">Tujuan:</span>
                   <span>{packageDetails.destination || "N/A"}</span>

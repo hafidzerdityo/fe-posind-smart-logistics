@@ -1,10 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTachometerAlt,
+  faTruck,
+  faList,
+} from "@fortawesome/free-solid-svg-icons";
 
 import logo from "../../../assets/POSIND_2023.svg.png";
 
-const Sidebar = ({ listSideBarItem, setSelectedView, selectedView }) => {
+const Sidebar = ({ setSelectedView, selectedView }) => {
+  const listSideBarItem = [
+    { label: "List Order", icon: faList },
+    { label: "Dashboard", icon: faTachometerAlt },
+    { label: "Tracker", icon: faTruck },
+  ];
   return (
     <>
       <div className="h-screen w-64 bg-base-100 mb-3">
@@ -18,7 +28,7 @@ const Sidebar = ({ listSideBarItem, setSelectedView, selectedView }) => {
           </Link>
           <Link to="/customer">
             <span className="btn btn-ghost text-xl hidden lg:flex">
-              Customer View
+              Admin Page
             </span>
           </Link>
         </div>
