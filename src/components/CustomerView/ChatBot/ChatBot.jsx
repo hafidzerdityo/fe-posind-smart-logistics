@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faComments,
@@ -58,24 +59,22 @@ const ChatBot = () => {
     try {
       const apiKey = import.meta.env.VITE_OPEN_AI_API_KEY;
 
-      const response = await fetch(
+      const response = await axios.post(
         "https://api.openai.com/v1/chat/completions",
         {
-          method: "POST",
+          model: "gpt-3.5-turbo",
+          messages: [{ role: "user", content: message }],
+        },
+        {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${apiKey}`,
           },
-          body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: message }],
-          }),
         }
       );
 
-      const data = await response.json();
       const botResponse =
-        data.choices[0]?.message?.content ||
+        response.data.choices[0]?.message?.content ||
         "Maaf, saya tidak mengerti pertanyaan Anda.";
       setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
     } catch (error) {
@@ -84,7 +83,7 @@ const ChatBot = () => {
         ...prev,
         {
           sender: "bot",
-          text: "Maaf, ada masalah dengan server kami. Silakan coba lagi nanti.",
+          text: "Maaf, server sedang sibuk. Silakan coba lagi nanti.",
         },
       ]);
     } finally {
