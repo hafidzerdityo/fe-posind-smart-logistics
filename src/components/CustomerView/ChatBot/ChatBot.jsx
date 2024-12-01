@@ -1,6 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComments, faUser, faRobot } from "@fortawesome/free-solid-svg-icons";
+import {
+  faComments,
+  faUser,
+  faRobot,
+  faExpandAlt,
+  faCompressAlt,
+} from "@fortawesome/free-solid-svg-icons";
 
 const ChatBot = () => {
   const [isWaitingForPackageId, setIsWaitingForPackageId] = useState(false);
@@ -8,39 +14,82 @@ const ChatBot = () => {
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
   const [isBotTyping, setIsBotTyping] = useState(false);
+  const [botFullScreen, setBotFullScreen] = useState(false);
   const chatBoxRef = useRef(null);
 
-  const handleUserMessage = (message) => {
+  const handleUserMessage = async (message) => {
     setMessages((prev) => [...prev, { sender: "user", text: message }]);
     setUserInput("");
     setIsBotTyping(true);
 
-    setTimeout(() => {
-      let botResponse = "Maaf, saya tidak mengerti pertanyaan Anda.";
+    if (message.toLowerCase().includes("paket saya sekarang dimana")) {
+      const botResponse =
+        "Maaf Untuk Ketidaknyamanannya ya kak, boleh minta id paketnya?";
+      setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
+      setIsWaitingForPackageId(true);
+      setIsBotTyping(false);
+      return;
+    }
 
-      if (message.toLowerCase().includes("paket saya sekarang dimana")) {
-        botResponse =
-          "Maaf Untuk Ketidaknyamanannya ya kak, boleh minta id paketnya?";
-        setIsWaitingForPackageId(true);
-      } else if (isWaitingForPackageId) {
-        const hubLocations = [
-          "Hub A - Jakarta",
-          "Hub B - Surabaya",
-          "Hub C - Bandung",
-        ];
-        const randomLocation =
-          hubLocations[Math.floor(Math.random() * hubLocations.length)];
-        botResponse = `Paket kakak saat ini berada di ${randomLocation}. Terima kasih!`;
-        setIsWaitingForPackageId(false);
-      }
-      if (message.toLowerCase().includes("cara buat order baru")) {
-        botResponse =
-          "Kakak Bisa Lihat di kanan atas ada New Order? Bisa tekan disana ya kak";
-      }
+    if (isWaitingForPackageId) {
+      const hubLocations = [
+        "Hub A - Jakarta",
+        "Hub B - Surabaya",
+        "Hub C - Bandung",
+      ];
+      const randomLocation =
+        hubLocations[Math.floor(Math.random() * hubLocations.length)];
+      const botResponse = `Paket kakak saat ini berada di ${randomLocation}. Terima kasih!`;
+      setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
+      setIsWaitingForPackageId(false);
+      setIsBotTyping(false);
+      return;
+    }
 
+    if (message.toLowerCase().includes("cara buat order baru")) {
+      const botResponse =
+        "Kakak Bisa Lihat di kanan atas ada New Order? Bisa tekan disana ya kak";
       setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
       setIsBotTyping(false);
-    }, 1500);
+      return;
+    }
+
+    // OpenAI API Integration
+    try {
+      const apiKey = import.meta.env.VITE_OPEN_AI_API_KEY;
+
+      const response = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [{ role: "user", content: message }],
+          }),
+        }
+      );
+
+      const data = await response.json();
+      const botResponse =
+        data.choices[0]?.message?.content ||
+        "Maaf, saya tidak mengerti pertanyaan Anda.";
+      setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
+    } catch (error) {
+      console.error("Error fetching OpenAI response:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: "Maaf, ada masalah dengan server kami. Silakan coba lagi nanti.",
+        },
+      ]);
+    } finally {
+      setIsBotTyping(false);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -69,11 +118,28 @@ const ChatBot = () => {
 
       {/* Chat Box */}
       {isChatBoxOpen && (
-        <div className="fixed bottom-16 right-4 z-[40] bg-base-200 shadow-lg rounded-lg w-1/4">
+        <div
+          className={`fixed bottom-16 right-4 z-[40] bg-base-200 shadow-lg rounded-lg ${
+            botFullScreen ? "w-1/2 h-1/2" : "w-1/4"
+          } `}
+        >
           {/* Header */}
           <div className="bg-blue-600 text-white p-4 rounded-t-lg flex justify-between items-center">
-            <h3 className="text-lg font-semibold">AI Chat Assistant</h3>
-            <FontAwesomeIcon icon={faRobot} size="lg" />
+            <div className="flex">
+              <h3 className="text-lg font-semibold mx-2">AI Chat Assistant</h3>
+              <FontAwesomeIcon icon={faRobot} size="lg" />
+            </div>
+            <div>
+              <button
+                onClick={() => setBotFullScreen(!botFullScreen)}
+                className="btn btn-square btn-ghost"
+                title={botFullScreen ? "Exit Fullscreen" : "Fullscreen"}
+              >
+                <FontAwesomeIcon
+                  icon={botFullScreen ? faCompressAlt : faExpandAlt}
+                />
+              </button>
+            </div>
           </div>
 
           {/* Chat Content */}

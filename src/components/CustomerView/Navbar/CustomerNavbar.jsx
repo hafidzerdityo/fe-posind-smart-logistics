@@ -134,7 +134,7 @@ const CustomerNavbar = ({
                 alt="Profile"
                 className="w-8 h-8 rounded-full mr-2"
               />
-              <span>Name Here</span>
+              <span>Admin</span>
             </button>
 
             {isProfileDropdown && (

@@ -61,6 +61,16 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
 
   // End of Metode Kirim
 
+  // Transportasi
+  const [multiSelectedVehicles, setMultiSelectedVehicles] = useState([]);
+  const handleMultiSelect = (id) => {
+    setMultiSelectedVehicles((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  // End of Transportasi
+
   const [price, setPrice] = useState(0);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [packageDetails, setPackageDetails] = useState({
@@ -114,6 +124,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
     { name: "Angkutan Udara", data: "angkutan_udara" },
     { name: "Angkutan Laut", data: "angkutan_laut" },
     { name: "Angkutan Darat", data: "angkutan_darat" },
+    { name: "Custom", data: "gabungan" },
   ];
   const selectedTransportName =
     jenisAngkutan.find((item) => item.data === selectedTransport)?.name ||
@@ -138,78 +149,49 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
         "Ideal untuk barang dengan penanganan khusus dan elektronik / 1,7 x 1 x 0,8 Meter hingga 200 kg",
       suitable_industries: ["Healthcare", "Retail"],
     },
+    // (Other vehicles omitted for brevity)
+  ];
+
+  // Dummy items for pesawat and kapal laut
+  const additionalItems = [
     {
-      id: "van",
-      name: "Van",
-      image:
-        "https://s.alicdn.com/@sc04/kf/H3ffd4115a1434c57913da54837cf38c1p.jpg_720x720q50.jpg",
+      id: "airplane_cargo_small",
+      name: "Pesawat Kargo Kecil",
+      image: "https://cdn.jetphotos.com/full/3/777.jpg",
       description:
-        "Ideal untuk pengiriman banyak dan furnitur / 2,1 x 1,5 x 1,2 Meter hingga 600 kg",
-      suitable_industries: ["Furniture", "Wholesale"],
+        "Ideal untuk pengiriman udara skala kecil hingga 1.5 ton dengan dimensi 4 x 2 x 1.5 meter.",
+      suitable_industries: ["E-commerce", "Electronics"],
     },
     {
-      id: "pickupBak",
-      name: "Pickup Bak",
+      id: "airplane_cargo_large",
+      name: "Pesawat Kargo Besar",
       image:
-        "https://www.astra-daihatsu.id/_next/image?url=https%3A%2F%2Fdsoodysseusstprod.blob.core.windows.net%2Fstrapi-media%2Fassets%2Fsys_master_media_h67_hb1_8816880844830_Gran_Max_1f89268cb2.jpg&w=3840&q=75",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Antonov_AN-124.jpg",
       description:
-        "Ideal untuk bahan berukuran khusus seperti bahan bangunan / 2 x 1,6 x 1,2 Meter hingga 800 kg",
-      suitable_industries: ["Construction", "Agriculture"],
+        "Ideal untuk pengiriman udara skala besar hingga 10 ton dengan dimensi 12 x 3.5 x 3 meter.",
+      suitable_industries: ["Industrial Supplies", "Heavy Equipment"],
     },
     {
-      id: "pickupBox",
-      name: "Pickup Box",
-      image:
-        "https://daihatsupanam.com/wp-content/uploads/2021/03/pickup-box1.jpg",
+      id: "cargo_ship_small",
+      name: "Kapal Kargo Kecil",
+      image: "https://www.fleetmon.com/media/images/vessels/default-image.jpg",
       description:
-        "Ideal untuk barang besar dengan penanganan khusus / 2,4 x 1,6 x 1,2 Meter hingga 1000 kg",
+        "Ideal untuk pengiriman laut skala kecil hingga 20 ton dengan dimensi 6 x 3 x 2.5 meter.",
+      suitable_industries: ["Agriculture", "Retail"],
+    },
+    {
+      id: "cargo_ship_large",
+      name: "Kapal Kargo Besar",
+      image:
+        "https://cdn.fleetmon.com/media/images/vessels/largest-cargo-vessel.jpg",
+      description:
+        "Ideal untuk pengiriman laut skala besar hingga 200 ton dengan dimensi 20 x 8 x 6 meter.",
       suitable_industries: ["Logistics", "Manufacturing"],
     },
-    {
-      id: "engkelBox",
-      name: "Engkel Box",
-      image:
-        "https://isuzu-online.com/wp-content/uploads/2024/01/Mobil-Box-isuzu-Engkel-Long-karoseri-box-besi-baru-scaled.jpg",
-      description:
-        "Ideal untuk barang besar dan banyak termasuk pindahan / 3,1 x 1,7 x 1,7 Meter hingga 2000 kg",
-      suitable_industries: ["Household Moving", "Event Management"],
-    },
-    {
-      id: "engkelBak",
-      name: "Engkel Bak",
-      image:
-        "https://www.lalamove.com/hs-fs/hubfs/ID%20Fleet%202022/420x300_jkt_vehicle-CDD-Bak-new.png?width=500&height=324&name=420x300_jkt_vehicle-CDD-Bak-new.png",
-      description:
-        "Ideal untuk kiriman besar dan banyak termasuk pindahan rumah / 3,1 x 1,7 x 1,7 Meter hingga 2500 kg",
-      suitable_industries: ["Heavy Equipment", "Farm Supplies"],
-    },
-    {
-      id: "cddBak",
-      name: "CDD Bak",
-      image:
-        "https://yosualogistik.co.id/wp-content/uploads/2022/06/5.-Jasa-Sewa-Truk-CDD-Bak-Muatan-Kapasitas-5-Ton-1.jpg",
-      description:
-        "Ideal untuk kiriman besar dan banyak serta material besar / 4,5 x 2 x 2 hingga 5000 kg",
-      suitable_industries: ["Industrial Supplies", "Building Materials"],
-    },
-    {
-      id: "cddBox",
-      name: "CDD Box",
-      image:
-        "https://dpltranslogistics.com/wp-content/uploads/2020/09/Sewa-Truk-Box-Double.jpg",
-      description:
-        "Ideal untuk kiriman besar dan banyak serta material besar / 4,5 x 2 x 2 hingga 5000 kg",
-      suitable_industries: ["Food Delivery", "Pharmaceuticals"],
-    },
-    {
-      id: "heavyTruckOpen",
-      name: "Heavy Truck Open",
-      image: "https://www.lalamove.com/hubfs/fuso%20truk%20bak-1.png",
-      description:
-        "Ideal untuk kiriman besar dan barang berat / 5,7 x 2,5 x 2,5 Meter hingga 8000 kg",
-      suitable_industries: ["Mining", "Energy"],
-    },
   ];
+
+  // Combine vehicles and additionalItems for "gabungan"
+  const gabungan = [...vehicles, ...additionalItems];
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 3;
@@ -478,7 +460,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
               </h3>
 
               <div className="mt-5 border rounded-lg p-4 space-y-3">
-                {/* Updated onChange for <select> */}
+                {/* Dropdown to select transport type */}
                 <select
                   className="select select-sm select-bordered w-1/2 mb-5"
                   value={selectedTransport} // Bind the state
@@ -494,7 +476,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                   ))}
                 </select>
 
-                {/* Vehicle cards with pagination */}
+                {/* Angkutan Darat Content */}
                 {selectedTransport === "angkutan_darat" && (
                   <div className="flex flex-wrap justify-around gap-4">
                     {paginatedVehicles.map((data) => (
@@ -522,11 +504,9 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                               </div>
                             ))}
                           </div>
-                          {/* Select Button */}
                           <button
                             type="button"
-                            onClick={handleSelectVehicle}
-                            value={data.id}
+                            onClick={() => handleSelectVehicle(data.id)}
                             className={`btn mt-4 ${
                               isSelected === data.id
                                 ? "bg-green-500 text-white"
@@ -534,7 +514,93 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                             }`}
                           >
                             {isSelected === data.id ? "Dipilih" : "Pilih"}
-                          </button>{" "}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                    {/* Pagination controls */}
+                    <div className="flex justify-center pt-10">
+                      <div className="join">
+                        <button
+                          type="button"
+                          className="join-item btn"
+                          onClick={() => handlePageChange(currentPage - 1)}
+                          disabled={currentPage === 1}
+                        >
+                          Prev
+                        </button>
+                        {Array.from({ length: totalPages }, (_, index) => (
+                          <button
+                            type="button"
+                            key={index}
+                            className={`join-item btn ${
+                              currentPage === index + 1 ? "btn-active" : ""
+                            }`}
+                            onClick={() => handlePageChange(index + 1)}
+                          >
+                            {index + 1}
+                          </button>
+                        ))}
+                        <button
+                          type="button"
+                          className="join-item btn"
+                          onClick={() => handlePageChange(currentPage + 1)}
+                          disabled={currentPage === totalPages}
+                        >
+                          Next
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Gabungan Content */}
+                {selectedTransport === "gabungan" && (
+                  <div className="flex flex-wrap justify-around gap-4">
+                    {paginatedVehicles.map((data) => (
+                      <div
+                        className="card bg-base-100 w-96 shadow-xl"
+                        key={data.id}
+                      >
+                        <figure>
+                          <img
+                            src={data.image}
+                            alt={data.name}
+                            className="w-full h-48 object-contain"
+                          />
+                        </figure>
+                        <div className="card-body">
+                          <h2 className="card-title">
+                            {data.name}
+                            <div className="badge badge-secondary">NEW</div>
+                          </h2>
+                          <p>{data.description}</p>
+                          <div className="card-actions justify-end">
+                            {data.suitable_industries.map((industry, index) => (
+                              <div key={index} className="badge badge-outline">
+                                {industry}
+                              </div>
+                            ))}
+                          </div>
+                          <label className="flex items-center space-x-2 mt-4">
+                            <input
+                              type="checkbox"
+                              checked={multiSelectedVehicles.includes(data.id)}
+                              onChange={() => handleMultiSelect(data.id)}
+                              className="checkbox"
+                            />
+                            <span
+                              className={`${
+                                multiSelectedVehicles.includes(data.id)
+                                  ? "text-green-500 font-bold"
+                                  : "text-gray-700"
+                              }`}
+                            >
+                              {multiSelectedVehicles.includes(data.id)
+                                ? "Dipilih"
+                                : "Pilih"}
+                            </span>
+                          </label>
                         </div>
                       </div>
                     ))}
@@ -576,6 +642,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
               </div>
             </div>
           )}
+
           {progressStep === 6 && (
             <div className={isFullscreen && "w-1/2 mx-auto"}>
               <h3 className="font-bold text-xl mb-6">Receipt</h3>
