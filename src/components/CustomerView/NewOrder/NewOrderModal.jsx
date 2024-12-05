@@ -13,8 +13,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import EndToEndLogistics from "./Services/EndToEndLogistics/EndToEndLogistics";
+import Alert from "../../utils/Alert";
 
 const NewOrderModal = ({ setNewOrderModal }) => {
+  const [error, setError] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -60,12 +62,14 @@ const NewOrderModal = ({ setNewOrderModal }) => {
     if (serviceKey === "courier_and_cargo_solutions") {
       setSelectedService(serviceKey);
     } else {
-      alert("Service belum dibuat");
+      setError(true);
     }
   };
 
   return (
     <>
+      {/* error alert */}
+
       {/* Overlay */}
       <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[51]">
         {/* Modal */}
@@ -76,6 +80,13 @@ const NewOrderModal = ({ setNewOrderModal }) => {
               : "max-w-3xl w-full max-h-[75vh] rounded-md p-6"
           } overflow-auto`}
         >
+          {error && (
+            <Alert
+              type={"error"}
+              text={"Service Belum Dibuat"}
+              setError={setError}
+            />
+          )}
           {/* Header */}
           <div className="flex justify-between items-center border-b pb-4 mb-4">
             <h3 className="font-bold text-2xl">
