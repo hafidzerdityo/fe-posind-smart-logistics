@@ -91,13 +91,13 @@ const Tracker = () => {
     <div className="p-8 space-y-8 bg-gray-100 min-h-screen">
       {/* Map Section */}
       <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold text-gray-700 mb-4">
+        <h2 className="text-2xl font-bold text-gray-700 mb-4 ">
           Shipment Location
         </h2>
         <MapContainer
           center={shipment.location}
           zoom={13}
-          style={{ height: "300px", borderRadius: "8px" }}
+          style={{ height: "300px", borderRadius: "8px", zIndex: "10" }}
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
