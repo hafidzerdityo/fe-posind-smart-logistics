@@ -321,7 +321,7 @@ const Dashboard = () => {
       </div>
 
       {/* Table Section */}
-      <div className="mt-8">
+      {/* <div className="mt-8">
         <div className="card bg-base-100 shadow-md">
           <div className="card-body">
             <h2 className="text-lg font-bold mb-4">Recent Transactions</h2>
@@ -351,7 +351,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
