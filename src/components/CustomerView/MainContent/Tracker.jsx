@@ -17,7 +17,7 @@ const Tracker = () => {
     location: [-6.914744, 107.60981],
     temperature: -18,
     status: "In Transit",
-    ETA: "2024-11-22 18:00",
+    ETA: "2024-11-22 18:00", // Initially set ETA
     speed: 50,
     route: "Route A",
     transportation: "Pickup Box",
@@ -41,6 +41,16 @@ const Tracker = () => {
   const [trackOrderClicked, setTrackOrderClicked] = useState(false); // New state to track button click
 
   useEffect(() => {
+    const generateRandomETA = () => {
+      // Create a random ETA between 1 to 5 hours from the current time
+      const randomHours = Math.floor(Math.random() * 5) + 1;
+      const randomMinutes = Math.floor(Math.random() * 60);
+      const currentDate = new Date();
+      currentDate.setHours(currentDate.getHours() + randomHours);
+      currentDate.setMinutes(currentDate.getMinutes() + randomMinutes);
+      return currentDate.toLocaleString();
+    };
+
     const updateShipmentData = () => {
       setShipment((prev) => ({
         ...prev,
@@ -54,6 +64,7 @@ const Tracker = () => {
           Math.min(80, prev.speed + (Math.random() - 0.5) * 10)
         ),
         route: routes[Math.floor(Math.random() * routes.length)],
+        ETA: generateRandomETA(), // Set the random ETA here
       }));
 
       setTemperatureHistory((prev) => {
@@ -62,6 +73,19 @@ const Tracker = () => {
           {
             datetime: new Date().toLocaleTimeString(),
             temp: shipment.temperature.toFixed(1),
+          },
+        ];
+        return updatedHistory.length > 10
+          ? updatedHistory.slice(1)
+          : updatedHistory;
+      });
+
+      setEtaHistory((prev) => {
+        const updatedHistory = [
+          ...prev,
+          {
+            datetime: new Date().toLocaleTimeString(),
+            eta: shipment.ETA,
           },
         ];
         return updatedHistory.length > 10
@@ -230,17 +254,18 @@ const Tracker = () => {
                 </ul>
               </div>
             </div>
+
             <div className="bg-base-100 rounded-lg shadow-md p-6 flex-1">
               <h3 className="text-2xl font-bold text-base-700 mb-4">
-                Weekly History
+                ETA History
               </h3>
               <div className="overflow-y-auto max-h-40 border rounded-md p-4 bg-gray-50">
                 <ul className="space-y-2">
-                  {temperatureHistory.map((item, index) => (
+                  {etaHistory.map((item, index) => (
                     <li key={index} className="flex justify-between text-sm">
                       <span className="text-base-600">{item.datetime}</span>
                       <span className="text-base-800 font-medium">
-                        {item.temp}°C
+                        {item.eta}
                       </span>
                     </li>
                   ))}
