@@ -88,10 +88,10 @@ const Tracker = () => {
   }, [shipment, routes]);
 
   return (
-    <div className="p-8 space-y-8 bg-gray-100 min-h-screen ">
+    <div className="p-8 space-y-8 bg-base-100 min-h-screen ">
       {/* Map Section */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-bold text-gray-700 mb-4 ">
+      <div className="bg-base-100 rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-bold text-base-700 mb-4 ">
           Shipment Location
         </h2>
         <MapContainer
@@ -113,8 +113,8 @@ const Tracker = () => {
       </div>
 
       {/* Shipment Status */}
-      <div className="bg-white rounded-lg shadow-md p-6 space-y-6">
-        <h3 className="text-2xl font-bold text-gray-700">Current Status</h3>
+      <div className="bg-base-100 rounded-lg shadow-md p-6 space-y-6">
+        <h3 className="text-2xl font-bold text-base-700">Current Status</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <StatusCard
             icon={faThermometerHalf}
@@ -159,13 +159,13 @@ const Tracker = () => {
       </div>
 
       {/* Journey Section */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h3 className="text-2xl font-bold text-gray-700 mb-4">Journey</h3>
+      <div className="bg-base-100 rounded-lg shadow-md p-6">
+        <h3 className="text-2xl font-bold text-base-700 mb-4">Journey</h3>
         <div className="space-y-4 border-l-4 border-blue-500 pl-4">
           {journey.map((item, index) => (
             <div key={index} className="flex flex-col space-y-1">
-              <span className="text-sm text-gray-500">{item.timestamp}</span>
-              <span className="text-lg text-gray-700 font-medium">
+              <span className="text-sm text-base-500">{item.timestamp}</span>
+              <span className="text-lg text-base-700 font-medium">
                 {item.event}
               </span>
             </div>
@@ -176,16 +176,16 @@ const Tracker = () => {
       {/* History */}
       {/* Temperature History */}
       <div className="flex gap-4">
-        <div className="bg-white rounded-lg shadow-md p-6 flex-1">
-          <h3 className="text-2xl font-bold text-gray-700 mb-4">
+        <div className="bg-base-100 rounded-lg shadow-md p-6 flex-1">
+          <h3 className="text-2xl font-bold text-base-700 mb-4">
             Temperature History
           </h3>
           <div className="overflow-y-auto max-h-40 border rounded-md p-4 bg-gray-50">
             <ul className="space-y-2">
               {temperatureHistory.map((item, index) => (
                 <li key={index} className="flex justify-between text-sm">
-                  <span className="text-gray-600">{item.datetime}</span>
-                  <span className="text-gray-800 font-medium">
+                  <span className="text-base-600">{item.datetime}</span>
+                  <span className="text-base-800 font-medium">
                     {item.temp}°C
                   </span>
                 </li>
@@ -193,16 +193,16 @@ const Tracker = () => {
             </ul>
           </div>
         </div>
-        <div className="bg-white rounded-lg shadow-md p-6 flex-1">
-          <h3 className="text-2xl font-bold text-gray-700 mb-4">
+        <div className="bg-base-100 rounded-lg shadow-md p-6 flex-1">
+          <h3 className="text-2xl font-bold text-base-700 mb-4">
             Temperature History
           </h3>
           <div className="overflow-y-auto max-h-40 border rounded-md p-4 bg-gray-50">
             <ul className="space-y-2">
               {temperatureHistory.map((item, index) => (
                 <li key={index} className="flex justify-between text-sm">
-                  <span className="text-gray-600">{item.datetime}</span>
-                  <span className="text-gray-800 font-medium">
+                  <span className="text-base-600">{item.datetime}</span>
+                  <span className="text-base-800 font-medium">
                     {item.temp}°C
                   </span>
                 </li>
@@ -221,9 +221,9 @@ const StatusCard = ({ icon, color, title, value, subtitle }) => (
     <div className="flex items-center space-x-4">
       <FontAwesomeIcon icon={icon} size="2x" className={`text-${color}`} />
       <div>
-        <h3 className="text-lg font-semibold text-gray-700">{title}</h3>
-        <div className="text-xl font-bold text-gray-900">{value}</div>
-        {subtitle && <div className="text-sm text-gray-500">{subtitle}</div>}
+        <h3 className="text-lg font-semibold text-base-700">{title}</h3>
+        <div className="text-xl font-bold text-base-900">{value}</div>
+        {subtitle && <div className="text-sm text-base-500">{subtitle}</div>}
       </div>
     </div>
   </div>
