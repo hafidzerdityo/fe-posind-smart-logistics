@@ -101,7 +101,7 @@ const ListOrder = () => {
           {/* head */}
           <thead className="bg-primary text-base-300">
             <tr>
-              <th>#</th>
+              <th>ID</th>
               <th>Industri</th>
               <th>Solusi</th>
               <th>Jadwal</th>

@@ -13,6 +13,9 @@ const CustomerView = ({ setTheme, theme }) => {
   const [isNewOrderModal, setNewOrderModal] = useState(false);
   const [selectedView, setSelectedView] = useState("Dashboard");
 
+  // Tutorial
+  const [isTutorOrderButton, setIsTutorOrderButton] = useState(false);
+
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
@@ -33,10 +36,15 @@ const CustomerView = ({ setTheme, theme }) => {
   return (
     <>
       <div>
+        {/* Dimmed Content */}
         {isNewOrderModal && (
-          <NewOrderModal setNewOrderModal={setNewOrderModal} />
+          <NewOrderModal
+            setNewOrderModal={setNewOrderModal}
+            isTutorOrderButton={isTutorOrderButton}
+            setIsTutorOrderButton={setIsTutorOrderButton}
+          />
         )}
-        <div className="flex">
+        <div className="flex ">
           {/* Sidebar */}
           <Sidebar
             selectedView={selectedView}
@@ -51,14 +59,17 @@ const CustomerView = ({ setTheme, theme }) => {
               setProfileDropdown={setProfileDropdown}
               toggleTheme={toggleTheme}
               theme={theme}
+              isTutorOrderButton={isTutorOrderButton}
             />
 
             {/* Main Content */}
             {renderMainContent()}
           </div>
         </div>
-
-        <ChatBot />
+        <ChatBot
+          isTutorOrderButton={isTutorOrderButton}
+          setIsTutorOrderButton={setIsTutorOrderButton}
+        />
       </div>
     </>
   );

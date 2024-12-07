@@ -17,7 +17,7 @@ const Sidebar = ({ setSelectedView, selectedView }) => {
   ];
   return (
     <>
-      <div className="h-screen w-64 bg-base-100 mb-3">
+      <div className="h-screen w-64 bg-base-100 mb-3 ">
         <div className=" h-20 mb-4">
           <Link to="/customer">
             <img

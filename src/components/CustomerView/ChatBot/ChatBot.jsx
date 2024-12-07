@@ -9,8 +9,7 @@ import {
   faCompressAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-const ChatBot = () => {
-  const [isWaitingForPackageId, setIsWaitingForPackageId] = useState(false);
+const ChatBot = ({ isTutorOrderButton, setIsTutorOrderButton }) => {
   const [isChatBoxOpen, setIsChatBoxOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
@@ -23,35 +22,27 @@ const ChatBot = () => {
     setUserInput("");
     setIsBotTyping(true);
 
-    if (message.toLowerCase().includes("paket saya sekarang dimana")) {
-      const botResponse =
-        "Maaf Untuk Ketidaknyamanannya ya kak, boleh minta id paketnya?";
-      setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
-      setIsWaitingForPackageId(true);
-      setIsBotTyping(false);
-      return;
-    }
+    // Tutor Order Baru
+    const orderBaruWords = ["cara", "buat", "order", "baru", "cargo"];
+    const orderBaruContainsWord = orderBaruWords.every((word) =>
+      message.toLowerCase().includes(word.toLowerCase())
+    );
+    if (orderBaruContainsWord) {
+      setIsBotTyping(true);
+      setIsBotTyping("tutor"); // Set to a specific state for the Tutor Order loading
 
-    if (isWaitingForPackageId) {
-      const hubLocations = [
-        "Hub A - Jakarta",
-        "Hub B - Surabaya",
-        "Hub C - Bandung",
-      ];
-      const randomLocation =
-        hubLocations[Math.floor(Math.random() * hubLocations.length)];
-      const botResponse = `Paket kakak saat ini berada di ${randomLocation}. Terima kasih!`;
-      setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
-      setIsWaitingForPackageId(false);
-      setIsBotTyping(false);
-      return;
-    }
+      // Simulate some delay for the loading effect
+      setTimeout(() => {
+        const botResponse =
+          "Halo, silakan lihat di kanan atas ada opsi 'New Order'. Kamu bisa menekan di sana untuk melanjutkan. Setelah itu, pilih layanan 'Courier & Cargo Solutions'. Jangan lupa untuk mengisi semua Detail Kiriman dengan lengkap dan jelas ya. Terima kasih!";
+        setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
+        setIsTutorOrderButton(true);
+        setTimeout(() => {
+          setIsTutorOrderButton(false);
+        }, 10000);
+        setIsBotTyping(false); // Stop typing indicator after the message is sent
+      }, 2000); // Simulate a delay to show loading effect
 
-    if (message.toLowerCase().includes("cara buat order baru")) {
-      const botResponse =
-        "Kakak Bisa Lihat di kanan atas ada New Order? Bisa tekan disana ya kak";
-      setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
-      setIsBotTyping(false);
       return;
     }
 

@@ -15,7 +15,11 @@ import {
 import EndToEndLogistics from "./Services/EndToEndLogistics/EndToEndLogistics";
 import Alert from "../../utils/Alert";
 
-const NewOrderModal = ({ setNewOrderModal }) => {
+const NewOrderModal = ({
+  setNewOrderModal,
+  isTutorOrderButton,
+  setIsTutorOrderButton,
+}) => {
   const [error, setError] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -139,6 +143,15 @@ const NewOrderModal = ({ setNewOrderModal }) => {
                   key={service.key}
                   className="btn btn-primary flex flex-col items-center p-4 space-y-2 hover:btn-primary"
                   onClick={() => handleServiceSelection(service.key)}
+                  style={
+                    isTutorOrderButton &&
+                    service.key === "courier_and_cargo_solutions"
+                      ? {
+                          border: "6px solid red",
+                          animation: "blinking 1s infinite",
+                        }
+                      : {} // Return an empty object if the condition is false
+                  }
                 >
                   <FontAwesomeIcon icon={service.icon} size="2x" />
                   <span>{service.name}</span>

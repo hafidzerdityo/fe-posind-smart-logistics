@@ -318,28 +318,6 @@ const Dashboard = () => {
             />
           </div>
         </div>
-        <div className="card bg-base-100 shadow-md p-4">
-          <h2 className="text-lg font-semibold mb-4">Logistics Performance</h2>
-          <div className="relative h-72">
-            {" "}
-            {/* Set uniform height */}
-            <Radar
-              data={radarChartData}
-              options={{ responsive: true, maintainAspectRatio: false }}
-            />
-          </div>
-        </div>
-        <div className="card bg-base-100 shadow-md p-4">
-          <h2 className="text-lg font-semibold mb-4">Delivery Times</h2>
-          <div className="relative h-72">
-            {" "}
-            {/* Set uniform height */}
-            <Scatter
-              data={scatterChartData}
-              options={{ responsive: true, maintainAspectRatio: false }}
-            />
-          </div>
-        </div>
       </div>
 
       {/* Table Section */}
