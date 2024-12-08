@@ -272,6 +272,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
     length: 0,
     width: 0,
     height: 0,
+    htnb: 0,
   });
 
   const handlePackageDetailsChange = (e) => {
@@ -282,11 +283,15 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
         name === "weight" ||
         name === "length" ||
         name === "width" ||
+        name === "htnb" ||
         name === "height"
           ? parseFloat(value) || 0
           : value,
     }));
   };
+
+  const [insuranceVendor, setInsuranceVendor] = useState("");
+  const [insuranceCost, setInsuranceCost] = useState(0);
 
   useEffect(() => {
     const weightPrice = packageDetails.weight * 5000;
@@ -466,6 +471,21 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                       placeholder="Tinggi (cm)"
                     />
                   </div>
+                </div>
+
+                {/* Weight */}
+                <div className="form-control">
+                  <label className="label font-semibold">
+                    Harga Tanggung Nilai Barang (Rp)
+                  </label>
+                  <input
+                    type="number"
+                    name="htnb"
+                    value={packageDetails.htnb === 0 ? "" : packageDetails.htnb}
+                    onChange={handlePackageDetailsChange}
+                    className="input input-sm input-bordered"
+                    placeholder="Harga Tanggung Nilai Barang"
+                  />
                 </div>
               </div>
             </div>
@@ -888,6 +908,32 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
           {progressStep === 6 && (
             <div className={isFullscreen && "w-1/2 mx-auto"}>
               <h3 className="font-bold text-xl mb-6">Receipt</h3>
+
+              {/* Insurance Vendor Selection */}
+              <div className="space-y-2">
+                <p className="text-sm font-medium">Pilih Asuransi:</p>
+                <select
+                  className="select select-sm select-primary w-full max-w-xs"
+                  value={insuranceVendor}
+                  onChange={(e) => {
+                    const selectedVendor = e.target.value;
+                    setInsuranceVendor(selectedVendor);
+
+                    // Set insurance cost based on selection
+                    if (selectedVendor === "Tanpa Asuransi") {
+                      setInsuranceCost(0);
+                    } else {
+                      setInsuranceCost(packageDetails.htnb * 0.02);
+                    }
+                  }}
+                >
+                  <option value="Tanpa Asuransi">Tanpa Asuransi</option>
+                  <option value="Zurich">Zurich</option>
+                  <option value="Askrindo">Askrindo</option>
+                  <option value="PLN">PLN</option>
+                </select>
+              </div>
+
               <div className="mt-5 border rounded-lg p-4 space-y-4">
                 {/* Display Details */}
                 <div className="flex justify-between items-center">
@@ -909,7 +955,6 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                       {packaging
                         .replace(/_/g, " ")
                         .replace(/\b\w/g, (char) => char.toUpperCase()) ||
-                        "N/A" ||
                         "N/A"}
                     </span>
                   </div>
@@ -939,6 +984,27 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                   <span>{selectedTransportName || "N/A"}</span>
                 </div>
 
+                {/* Insurance Cost Calculation */}
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold">Penyelenggara Asuransi:</span>
+                  <span>{insuranceVendor || "N/A"}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold">
+                    Harga Tanggung Nilai Barang (HTNB):
+                  </span>
+                  <span>Rp {packageDetails.htnb.toLocaleString()}</span>
+                </div>
+
+                {/* Insurance Cost Calculation */}
+
+                <div className="flex justify-between items-center">
+                  <span className="font-semibold">
+                    Biaya Asuransi (2% HTNB):
+                  </span>
+                  <span>Rp {insuranceCost.toLocaleString()}</span>
+                </div>
+
                 {/* Price Calculation */}
                 <div className="divider"></div>
                 <h4 className="font-bold text-lg">Perhitungan Harga</h4>
@@ -963,7 +1029,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
                 <div className="flex justify-between items-center">
                   <span className="font-semibold">Total:</span>
                   <span className="font-bold text-primary">
-                    Rp {price.toLocaleString()}
+                    Rp {(price + insuranceCost).toLocaleString()}
                   </span>
                 </div>
               </div>
@@ -976,6 +1042,7 @@ const EndToEndLogistics = ({ isFullscreen, setNewOrderModal }) => {
               </div>
             </div>
           )}
+
           {progressStep === 7 && (
             <div
               className={`${
