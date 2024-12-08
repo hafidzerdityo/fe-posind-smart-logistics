@@ -331,16 +331,6 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="card bg-base-100 shadow-md p-4">
-          <h2 className="text-lg font-semibold mb-4">Service Usage</h2>
-          <div className="relative h-72">
-            {/* Set uniform height */}
-            <Bar
-              data={mixedBarData}
-              options={{ responsive: true, maintainAspectRatio: false }}
-            />
-          </div>
-        </div>
-        <div className="card bg-base-100 shadow-md p-4">
           <h2 className="text-lg font-semibold mb-4">Transportation Usage</h2>
           <div className="relative h-72">
             {/* Set uniform height */}
@@ -350,7 +340,7 @@ const Dashboard = () => {
             />
           </div>
         </div>
-        <div className="card bg-base-100 shadow-md p-4">
+        <div className="card bg-base-100 shadow-md p-4 col-span-full">
           <h2 className="text-lg font-semibold mb-4">
             Order Trends (Forecast)
           </h2>

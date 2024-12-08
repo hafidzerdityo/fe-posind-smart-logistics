@@ -8,21 +8,19 @@ import {
   faMapMarkerAlt,
   faClock,
   faTruck,
-  faArrowRight,
-  faShip,
 } from "@fortawesome/free-solid-svg-icons";
 import "leaflet/dist/leaflet.css";
 import Alert from "../../utils/Alert";
 
 const Tracker = ({ isTutorTracking }) => {
   const [shipment, setShipment] = useState({
-    location: [-0.019258537293230668, 109.32985786669303],
+    location: [-6.914744, 107.60981],
     temperature: -18,
     status: "In Transit",
-    ETA: "2025-02-03 6:00:00 PM", // Initially set ETA
+    ETA: "2024-11-22 18:00", // Initially set ETA
     speed: 50,
     route: "Route A",
-    transportation: "Engkel Box",
+    transportation: "Pickup Box",
   });
 
   const [temperatureHistory, setTemperatureHistory] = useState([
@@ -33,44 +31,8 @@ const Tracker = ({ isTutorTracking }) => {
     { timestamp: new Date().toLocaleTimeString(), event: "Shipping picked up" },
   ]);
 
-  // Static journey data
-  const journeyStatic = [
-    {
-      timestamp: "02-Feb-2025 3:00:00 PM",
-      event:
-        "Shipping picked up at Gelora Bandung Indah Derwati Kabupaten Bandung.",
-    },
-    {
-      timestamp: "02-Feb-2025 5:30:00 PM",
-      event: "Shipping at Hub B Jakarta.",
-    },
-    {
-      timestamp: "02-Feb-2025 7:00:00 PM",
-      event: "Shipping at Port Tanjung Priok Jakarta.",
-    },
-    {
-      timestamp: "02-Feb-2025 8:30:00 PM",
-      event: "Switching Transportation to Big Cargo Ship *Delay: 3 hours.",
-    },
-    {
-      timestamp: "03-Feb-2025 2:00:00 PM",
-      event: "Shipping at Port Dwikora Pontianak.",
-    },
-    {
-      timestamp: "03-Feb-2025 2:00:00 PM",
-      event: "Switching Transportation to Engkel Box",
-    },
-    {
-      timestamp: "03-Feb-2025 2:20:00 PM",
-      event: "Shipping at Warhouse B Pontianak.",
-    },
-  ];
-
   const [etaHistory, setEtaHistory] = useState([
-    {
-      datetime: new Date().toLocaleTimeString(),
-      eta: "2025-02-03 6:00:00 PM",
-    },
+    { datetime: new Date().toLocaleTimeString(), eta: "2024-11-22 18:00" },
   ]);
 
   const routes = ["Route A", "Route B", "Route C"];
@@ -197,74 +159,6 @@ const Tracker = ({ isTutorTracking }) => {
       </div>
       {trackOrderClicked && ( // Only show content if trackOrderClicked is true
         <div>
-          {/* Journey Section */}
-          <div className="bg-base-100 rounded-lg shadow-md p-6">
-            <h3 className="text-2xl font-bold text-base-700 mb-4">Journey</h3>
-            <div className="space-y-4 border-l-4 border-blue-500 pl-4">
-              {journeyStatic.map((item, index) => (
-                <div key={index} className="flex flex-col space-y-1">
-                  <span className="text-sm text-base-500">
-                    {item.timestamp}
-                  </span>
-                  <div className="flex items-center space-x-2">
-                    {item.event.includes(
-                      "Switching Transportation to Big Cargo Ship"
-                    ) && (
-                      <>
-                        <FontAwesomeIcon
-                          icon={faTruck}
-                          className="text-gray-700"
-                          size="lg"
-                        />
-                        <FontAwesomeIcon
-                          icon={faArrowRight}
-                          className="text-gray-500"
-                          size="sm"
-                        />
-                        <FontAwesomeIcon
-                          icon={faShip}
-                          className="text-blue-700"
-                          size="lg"
-                        />
-                      </>
-                    )}
-                    {item.event.includes(
-                      "Switching Transportation to Engkel Box"
-                    ) && (
-                      <>
-                        <FontAwesomeIcon
-                          icon={faShip}
-                          className="text-blue-700"
-                          size="lg"
-                        />
-                        <FontAwesomeIcon
-                          icon={faArrowRight}
-                          className="text-gray-500"
-                          size="sm"
-                        />
-                        <FontAwesomeIcon
-                          icon={faTruck}
-                          className="text-gray-700"
-                          size="lg"
-                        />
-                      </>
-                    )}
-                    <span
-                      className={`text-lg font-medium ${
-                        item.event.includes(
-                          "Switching Transportation to Big Cargo Ship"
-                        )
-                          ? "text-red-700"
-                          : "text-base-700"
-                      }`}
-                    >
-                      {item.event}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
           {/* Map Section */}
           <div className="bg-base-100 rounded-lg shadow-md p-6">
             <h2 className="text-2xl font-bold text-base-700 mb-4 ">
@@ -327,7 +221,7 @@ const Tracker = ({ isTutorTracking }) => {
               <StatusCard
                 icon={faTruck}
                 color="gray-500"
-                title="Current Transportation"
+                title="Transportation"
                 value={shipment.transportation}
               />
             </div>
@@ -370,6 +264,22 @@ const Tracker = ({ isTutorTracking }) => {
                   ))}
                 </ul>
               </div>
+            </div>
+          </div>
+          {/* Journey Section */}
+          <div className="bg-base-100 rounded-lg shadow-md p-6">
+            <h3 className="text-2xl font-bold text-base-700 mb-4">Journey</h3>
+            <div className="space-y-4 border-l-4 border-blue-500 pl-4">
+              {journey.map((item, index) => (
+                <div key={index} className="flex flex-col space-y-1">
+                  <span className="text-sm text-base-500">
+                    {item.timestamp}
+                  </span>
+                  <span className="text-lg text-base-700 font-medium">
+                    {item.event}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

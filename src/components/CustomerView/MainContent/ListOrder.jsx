@@ -8,14 +8,14 @@ const ListOrder = ({ isTutorListOrder }) => {
       id: 1,
       industri: "Frozen Goods",
       solusi: "Courier and Cargo Solutions",
-      jadwal: "Daily",
+      jadwal: "Weekly",
       status: "On Going",
     },
     {
       id: 2,
       industri: "Healthcare",
       solusi: "Courier and Cargo Solutions",
-      jadwal: "Weekly",
+      jadwal: "Daily",
       status: "Pending",
     },
     {

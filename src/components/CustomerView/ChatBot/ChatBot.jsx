@@ -107,6 +107,35 @@ const ChatBot = ({
       return;
     }
 
+    // Harcoded Chat Summary Pesanan
+    const summaryOrderWords = ["status", "semua", "order"];
+    const summaryOrderContainsWord = summaryOrderWords.every((word) =>
+      message.toLowerCase().includes(word.toLowerCase())
+    );
+    if (summaryOrderContainsWord) {
+      setIsBotTyping(true);
+      setIsBotTyping("summary_pesanan"); // Set to a specific state for the Tutor Order loading
+
+      // Simulate some delay for the loading effect
+      setTimeout(() => {
+        const botResponse = `Anda memiliki total 7 pesanan dengan rincian sebagai berikut:
+            5 pesanan telah selesai (Completed), termasuk:
+
+            Frozen Goods dengan solusi Transporting (Jadwal Mingguan & Bulanan).
+            Energy dengan solusi Courier and Cargo Solutions (Jadwal Bulanan).
+            Retail dengan solusi Warehousing (Jadwal Mingguan).
+            2 pesanan masih berjalan, yaitu:
+
+            Frozen Goods dengan solusi Courier and Cargo Solutions (Jadwal Harian, Status On Going).
+            Healthcare dengan solusi Courier and Cargo Solutions (Jadwal Mingguan, Status Pending).
+            Silakan cek detail lebih lanjut melalui menu Tracker dengan memasukkan ID Order. Terima kasih!`;
+        setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
+        setIsBotTyping(false);
+      }, 2000); // Simulate a delay to show loading effect
+
+      return;
+    }
+
     // OpenAI API Integration
     try {
       const apiKey = import.meta.env.VITE_OPEN_AI_API_KEY;
