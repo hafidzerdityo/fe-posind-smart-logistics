@@ -17,6 +17,7 @@ const CustomerView = ({ setTheme, theme }) => {
   const [isTutorOrderButton, setIsTutorOrderButton] = useState(false);
   const [isTutorTracking, setIsTutorTracking] = useState(false);
   const [isTutorListOrder, setIsTutorListOrder] = useState(false);
+  const [isDelayOrder, setIsDelayOrder] = useState(false);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -27,7 +28,12 @@ const CustomerView = ({ setTheme, theme }) => {
       case "Dashboard":
         return <Dashboard />;
       case "Tracker":
-        return <Tracker isTutorTracking={isTutorTracking} />;
+        return (
+          <Tracker
+            isTutorTracking={isTutorTracking}
+            isDelayOrder={isDelayOrder}
+          />
+        );
       case "List Order":
         return <ListOrder isTutorListOrder={isTutorListOrder} />;
       default:
@@ -74,6 +80,7 @@ const CustomerView = ({ setTheme, theme }) => {
           setIsTutorOrderButton={setIsTutorOrderButton}
           setIsTutorTracking={setIsTutorTracking}
           setIsTutorListOrder={setIsTutorListOrder}
+          setIsDelayOrder={setIsDelayOrder}
         />
       </div>
     </>

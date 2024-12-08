@@ -13,6 +13,7 @@ const ChatBot = ({
   setIsTutorOrderButton,
   setIsTutorTracking,
   setIsTutorListOrder,
+  setIsDelayOrder,
 }) => {
   const [isChatBoxOpen, setIsChatBoxOpen] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -101,6 +102,33 @@ const ChatBot = ({
 
         setTimeout(() => {
           setIsTutorOrderButton(false); // Reset order button state after 10 seconds
+        }, 10000);
+      }, 2000); // Simulate a delay to show loading effect
+
+      return;
+    }
+
+    // Tutor Delay
+    const delayOrderWords = ["kenapa", "ETA", "lama", "order", "1"];
+    const delayOrderContainsWord = delayOrderWords.every((word) =>
+      message.toLowerCase().includes(word.toLowerCase())
+    );
+    if (delayOrderContainsWord) {
+      setIsBotTyping(true);
+      setIsBotTyping("delay_order"); // Set to a specific state for the Tutor Order loading
+
+      // Simulate some delay for the loading effect
+      setTimeout(() => {
+        const botResponse =
+          "Halo, setelah dicek ternyata ada delay yang cukup signifikan saat Switching Transportasi dari Pickup Box ke Big Cargo Ship selama 3 jam. Mohon maaf atas ketidaknyamanan ini. Untuk analisa lebih lanjut, Kamu bisa menghubungi contact center di: 08xxx";
+        setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
+        setIsDelayOrder(true);
+
+        // Stop loading animation and reset state after response
+        setIsBotTyping(false); // Stop typing indicator after the message is sent
+
+        setTimeout(() => {
+          setIsDelayOrder(false); // Reset order button state after 10 seconds
         }, 10000);
       }, 2000); // Simulate a delay to show loading effect
 

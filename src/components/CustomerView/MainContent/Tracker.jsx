@@ -14,7 +14,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import Alert from "../../utils/Alert";
 
-const Tracker = ({ isTutorTracking }) => {
+const Tracker = ({ isTutorTracking, isDelayOrder }) => {
   const [shipment, setShipment] = useState({
     location: [-0.019258537293230668, 109.32985786669303],
     temperature: -18,
@@ -206,7 +206,20 @@ const Tracker = ({ isTutorTracking }) => {
                   <span className="text-sm text-base-500">
                     {item.timestamp}
                   </span>
-                  <div className="flex items-center space-x-2">
+                  <div
+                    className="flex items-center space-x-2"
+                    style={
+                      isDelayOrder &&
+                      item.event.includes(
+                        "Switching Transportation to Big Cargo Ship"
+                      )
+                        ? {
+                            border: "4px solid red",
+                            animation: "blinking 1s infinite",
+                          }
+                        : {}
+                    }
+                  >
                     {item.event.includes(
                       "Switching Transportation to Big Cargo Ship"
                     ) && (
@@ -381,6 +394,19 @@ const Tracker = ({ isTutorTracking }) => {
           setError={setError}
         />
       )}
+      <style jsx>{`
+        @keyframes blinking {
+          0% {
+            border-color: red;
+          }
+          50% {
+            border-color: transparent;
+          }
+          100% {
+            border-color: red;
+          }
+        }
+      `}</style>
     </div>
   );
 };
