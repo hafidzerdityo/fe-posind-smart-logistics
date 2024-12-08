@@ -164,6 +164,33 @@ const ChatBot = ({
       return;
     }
 
+    // Harcoded Chat Summary Pesanan
+    const askPackingPriceWords = ["packaging", "harga"];
+    const askPackingPriceContainsWord = askPackingPriceWords.every((word) =>
+      message.toLowerCase().includes(word.toLowerCase())
+    );
+    if (askPackingPriceContainsWord) {
+      setIsBotTyping(true);
+      setIsBotTyping("packaging_harga"); // Set to a specific state for the Tutor Order loading
+
+      // Simulate some delay for the loading effect
+      setTimeout(() => {
+        const botResponse = `Berikut adalah pilihan kemasan yang tersedia beserta harganya:
+        - Kardus (Carton Box): IDR 5.000
+        - Polybag/Plastik: IDR 3.000
+        - Bubble Wrap: IDR 8.000
+        - Parcel Box: IDR 10.000
+        - Peti Kayu: IDR 20.000
+        - Kemasan Khusus (Barang Fragile): IDR 25.000
+        - Thermal Box: IDR 30.000
+        Silakan beri tahu saya jika Anda memerlukan informasi lebih lanjut mengenai pilihan kemasan ini!`;
+        setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
+        setIsBotTyping(false);
+      }, 2000); // Simulate a delay to show loading effect
+
+      return;
+    }
+
     // OpenAI API Integration
     try {
       const apiKey = import.meta.env.VITE_OPEN_AI_API_KEY;

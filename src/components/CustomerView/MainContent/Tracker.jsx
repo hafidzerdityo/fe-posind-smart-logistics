@@ -50,7 +50,7 @@ const Tracker = ({ isTutorTracking, isDelayOrder }) => {
     },
     {
       timestamp: "02-Feb-2025 8:30:00 PM",
-      event: "Switching Transportation to Big Cargo Ship *Delay: 3 hours.",
+      event: "Switching Transportation to Big Cargo Ship",
     },
     {
       timestamp: "03-Feb-2025 2:00:00 PM",
@@ -262,16 +262,19 @@ const Tracker = ({ isTutorTracking, isDelayOrder }) => {
                         />
                       </>
                     )}
-                    <span
-                      className={`text-lg font-medium ${
-                        item.event.includes(
-                          "Switching Transportation to Big Cargo Ship"
-                        )
-                          ? "text-red-700"
-                          : "text-base-700"
-                      }`}
-                    >
-                      {item.event}
+                    <span className={`text-lg font-medium text-base-700 `}>
+                      {item.event.includes(
+                        "Switching Transportation to Big Cargo Ship"
+                      ) ? (
+                        <>
+                          {item.event}
+                          <button className="btn btn-sm btn-error mx-3 text-base-700">
+                            Delayed 3 hours!
+                          </button>
+                        </>
+                      ) : (
+                        item.event
+                      )}
                     </span>
                   </div>
                 </div>
