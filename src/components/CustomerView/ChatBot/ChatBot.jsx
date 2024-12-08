@@ -9,7 +9,11 @@ import {
   faCompressAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
-const ChatBot = ({ isTutorOrderButton, setIsTutorOrderButton }) => {
+const ChatBot = ({
+  setIsTutorOrderButton,
+  setIsTutorTracking,
+  setIsTutorListOrder,
+}) => {
   const [isChatBoxOpen, setIsChatBoxOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
@@ -20,7 +24,61 @@ const ChatBot = ({ isTutorOrderButton, setIsTutorOrderButton }) => {
   const handleUserMessage = async (message) => {
     setMessages((prev) => [...prev, { sender: "user", text: message }]);
     setUserInput("");
-    setIsBotTyping(true);
+    setIsBotTyping(true); // Ensure loading animation starts
+
+    // Tutor Tracking
+    const trackingWords = ["cara", "tracking", "order"];
+    const trackingContainsWord = trackingWords.every((word) =>
+      message.toLowerCase().includes(word.toLowerCase())
+    );
+    if (trackingContainsWord) {
+      setIsBotTyping(true);
+      setIsBotTyping("tutor_tracking"); // Set to a specific state for the Tutor Order loading
+
+      // Simulate some delay for the loading effect
+      setTimeout(() => {
+        const botResponse =
+          "Halo, silakan lihat di Menu sebelah kiri ada Menu Tracker, Lalu silahkan masukkan ID order untuk melihat status dan journey dari kirimanmu secara Real Time. Terima Kasih!";
+        setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
+        setIsTutorTracking(true);
+
+        // Stop loading animation and reset state after response
+        setIsBotTyping(false); // Stop typing indicator after the message is sent
+
+        setTimeout(() => {
+          setIsTutorTracking(false); // Reset tracking state after 10 seconds
+        }, 10000);
+      }, 2000); // Simulate a delay to show loading effect
+
+      return;
+    }
+
+    // Tutor List Order
+    const listOrderWords = ["lihat", "id", "order"];
+    const listOrderContainsWord = listOrderWords.every((word) =>
+      message.toLowerCase().includes(word.toLowerCase())
+    );
+    if (listOrderContainsWord) {
+      setIsBotTyping(true);
+      setIsBotTyping("tutor_ListOrder"); // Set to a specific state for the Tutor Order loading
+
+      // Simulate some delay for the loading effect
+      setTimeout(() => {
+        const botResponse =
+          "Halo, kamu bisa lihat di menu sebelah kiri ada opsi list order. Disana ada informasi mengenai semua order kamu dan ID order pada kolom ID. Terima Kasih!";
+        setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
+        setIsTutorListOrder(true);
+
+        // Stop loading animation and reset state after response
+        setIsBotTyping(false); // Stop typing indicator after the message is sent
+
+        setTimeout(() => {
+          setIsTutorListOrder(false); // Reset tracking state after 10 seconds
+        }, 10000);
+      }, 2000); // Simulate a delay to show loading effect
+
+      return;
+    }
 
     // Tutor Order Baru
     const orderBaruWords = ["cara", "buat", "order", "baru", "cargo"];
@@ -37,10 +95,13 @@ const ChatBot = ({ isTutorOrderButton, setIsTutorOrderButton }) => {
           "Halo, silakan lihat di kanan atas ada opsi 'New Order'. Kamu bisa menekan di sana untuk melanjutkan. Setelah itu, pilih layanan 'Courier & Cargo Solutions'. Jangan lupa untuk mengisi semua Detail Kiriman dengan lengkap dan jelas ya. Terima kasih!";
         setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
         setIsTutorOrderButton(true);
-        setTimeout(() => {
-          setIsTutorOrderButton(false);
-        }, 10000);
+
+        // Stop loading animation and reset state after response
         setIsBotTyping(false); // Stop typing indicator after the message is sent
+
+        setTimeout(() => {
+          setIsTutorOrderButton(false); // Reset order button state after 10 seconds
+        }, 10000);
       }, 2000); // Simulate a delay to show loading effect
 
       return;
@@ -78,10 +139,9 @@ const ChatBot = ({ isTutorOrderButton, setIsTutorOrderButton }) => {
         },
       ]);
     } finally {
-      setIsBotTyping(false);
+      setIsBotTyping(false); // Ensure that bot typing stops when API request finishes
     }
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (userInput.trim()) {
@@ -102,7 +162,7 @@ const ChatBot = ({ isTutorOrderButton, setIsTutorOrderButton }) => {
         onClick={() => setIsChatBoxOpen(!isChatBoxOpen)}
         className="fixed bottom-4 right-4 z-[40] cursor-pointer p-4 rounded-full bg-blue-600 text-white shadow-lg"
       >
-        <span className="mx-2">Chat With Our AI!</span>
+        <span className="mx-2">Chat With Our AI Assistant!</span>
         <FontAwesomeIcon icon={faComments} size="lg" />
       </div>
 

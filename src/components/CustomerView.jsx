@@ -15,6 +15,8 @@ const CustomerView = ({ setTheme, theme }) => {
 
   // Tutorial
   const [isTutorOrderButton, setIsTutorOrderButton] = useState(false);
+  const [isTutorTracking, setIsTutorTracking] = useState(false);
+  const [isTutorListOrder, setIsTutorListOrder] = useState(false);
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
@@ -25,9 +27,9 @@ const CustomerView = ({ setTheme, theme }) => {
       case "Dashboard":
         return <Dashboard />;
       case "Tracker":
-        return <Tracker />;
+        return <Tracker isTutorTracking={isTutorTracking} />;
       case "List Order":
-        return <ListOrder />;
+        return <ListOrder isTutorListOrder={isTutorListOrder} />;
       default:
         return <Dashboard />;
     }
@@ -49,6 +51,8 @@ const CustomerView = ({ setTheme, theme }) => {
           <Sidebar
             selectedView={selectedView}
             setSelectedView={setSelectedView}
+            isTutorTracking={isTutorTracking}
+            isTutorListOrder={isTutorListOrder}
           />
           <div className="flex-1 p-6 bg-base-200">
             {/* Navbar */}
@@ -67,8 +71,9 @@ const CustomerView = ({ setTheme, theme }) => {
           </div>
         </div>
         <ChatBot
-          isTutorOrderButton={isTutorOrderButton}
           setIsTutorOrderButton={setIsTutorOrderButton}
+          setIsTutorTracking={setIsTutorTracking}
+          setIsTutorListOrder={setIsTutorListOrder}
         />
       </div>
     </>

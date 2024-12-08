@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 
-const ListOrder = () => {
+const ListOrder = ({ isTutorListOrder }) => {
   const industries = [
     {
       id: 1,
@@ -20,35 +20,35 @@ const ListOrder = () => {
     },
     {
       id: 3,
-      industri: "Pharmaceuticals",
+      industri: "Energy",
       solusi: "Courier and Cargo Solutions",
       jadwal: "Monthly",
       status: "Completed",
     },
     {
       id: 4,
-      industri: "Electronics",
+      industri: "Retail",
       solusi: "Warehousing",
       jadwal: "Weekly",
       status: "Completed",
     },
     {
       id: 5,
-      industri: "Textiles",
+      industri: "Retail",
       solusi: "Warehousing",
       jadwal: "Weekly",
       status: "Completed",
     },
     {
       id: 6,
-      industri: "Automotive",
+      industri: "Frozen Goods",
       solusi: "Transporting",
       jadwal: "Monthly",
       status: "Completed",
     },
     {
       id: 7,
-      industri: "Furniture",
+      industri: "Frozen Goods",
       solusi: "Transporting",
       jadwal: "Weekly",
       status: "Completed",
@@ -80,7 +80,18 @@ const ListOrder = () => {
           {/* head */}
           <thead className="bg-primary text-base-300">
             <tr>
-              <th>ID</th>
+              <th
+                style={
+                  isTutorListOrder
+                    ? {
+                        border: "4px solid red",
+                        animation: "blinking 1s infinite",
+                      }
+                    : {}
+                }
+              >
+                ID
+              </th>
               <th>Industri</th>
               <th>Solusi</th>
               <th>Jadwal</th>
@@ -135,6 +146,19 @@ const ListOrder = () => {
           </div>
         </div>
       </div>
+      <style jsx>{`
+        @keyframes blinking {
+          0% {
+            border-color: red;
+          }
+          50% {
+            border-color: transparent;
+          }
+          100% {
+            border-color: red;
+          }
+        }
+      `}</style>
     </>
   );
 };

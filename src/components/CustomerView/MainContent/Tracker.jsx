@@ -12,7 +12,7 @@ import {
 import "leaflet/dist/leaflet.css";
 import Alert from "../../utils/Alert";
 
-const Tracker = () => {
+const Tracker = ({ isTutorTracking }) => {
   const [shipment, setShipment] = useState({
     location: [-6.914744, 107.60981],
     temperature: -18,
@@ -140,6 +140,14 @@ const Tracker = () => {
             onChange={(e) => setIdOrder(e.target.value)}
             className="input input-sm input-bordered w-full"
             placeholder="Masukkan ID Order contoh: 1"
+            style={
+              isTutorTracking
+                ? {
+                    border: "3px solid red",
+                    animation: "blinking 1s infinite",
+                  }
+                : {}
+            }
           />
         </div>
         <button
@@ -218,22 +226,7 @@ const Tracker = () => {
               />
             </div>
           </div>
-          {/* Journey Section */}
-          <div className="bg-base-100 rounded-lg shadow-md p-6">
-            <h3 className="text-2xl font-bold text-base-700 mb-4">Journey</h3>
-            <div className="space-y-4 border-l-4 border-blue-500 pl-4">
-              {journey.map((item, index) => (
-                <div key={index} className="flex flex-col space-y-1">
-                  <span className="text-sm text-base-500">
-                    {item.timestamp}
-                  </span>
-                  <span className="text-lg text-base-700 font-medium">
-                    {item.event}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+
           {/* History */}
           {/* Temperature History */}
           <div className="flex gap-4">
@@ -271,6 +264,22 @@ const Tracker = () => {
                   ))}
                 </ul>
               </div>
+            </div>
+          </div>
+          {/* Journey Section */}
+          <div className="bg-base-100 rounded-lg shadow-md p-6">
+            <h3 className="text-2xl font-bold text-base-700 mb-4">Journey</h3>
+            <div className="space-y-4 border-l-4 border-blue-500 pl-4">
+              {journey.map((item, index) => (
+                <div key={index} className="flex flex-col space-y-1">
+                  <span className="text-sm text-base-500">
+                    {item.timestamp}
+                  </span>
+                  <span className="text-lg text-base-700 font-medium">
+                    {item.event}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

@@ -50,7 +50,7 @@ const Dashboard = () => {
     "Sea Transport",
     "Land Transport",
   ];
-  const servicesData = ["Courier and Cargo", "Warhousing", "Transporting"];
+  const servicesData = ["Express", "Standard", "Terjadwal"];
 
   // Summary card data
   const totalOrders = 2500;
@@ -87,9 +87,15 @@ const Dashboard = () => {
     datasets: [
       {
         type: "bar",
-        label: "Delivery Service",
-        data: [50, 60, 70], // Combined all data into one dataset
-        backgroundColor: "#4caf50",
+        label: "Standard Delivery",
+        data: [30, 40, 50],
+        backgroundColor: "#f44336",
+      },
+      {
+        type: "bar",
+        label: "Express Delivery",
+        data: [50, 60, 70],
+        backgroundColor: "#03a9f4",
       },
     ],
   };
@@ -107,67 +113,25 @@ const Dashboard = () => {
   };
 
   const lineChartData = {
-    labels: [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-    ],
+    labels: ["January", "February", "March", "April", "May", "June"],
     datasets: [
       {
-        label: "Courier and Cargo Orders",
-        data: [120, 150, 170, 140, 180, 200], // Actual data for first few months
-        borderColor: "#4caf50", // Color for actual data
+        label: "Express Orders",
+        data: [120, 150, 170, 140, 180, 200],
+        borderColor: "#4caf50",
         backgroundColor: "rgba(76, 175, 80, 0.2)",
-        tension: 0.4,
-        fill: true,
       },
       {
-        label: "Warhousing Orders",
-        data: [100, 120, 140, 110, 150, 180], // Actual data for first few months
-        borderColor: "#ff9800", // Color for actual data
+        label: "Standard Orders",
+        data: [100, 120, 140, 110, 150, 180],
+        borderColor: "#ff9800",
         backgroundColor: "rgba(255, 152, 0, 0.2)",
-        tension: 0.4,
-        fill: true,
       },
       {
-        label: "Transporting Orders",
-        data: [80, 100, 120, 90, 130, 160], // Actual data for first few months
-        borderColor: "#2196f3", // Color for actual data
+        label: "Custom Orders",
+        data: [80, 100, 120, 90, 130, 160],
+        borderColor: "#2196f3",
         backgroundColor: "rgba(33, 150, 243, 0.2)",
-        tension: 0.4,
-        fill: true,
-      },
-      {
-        label: "Courier and Cargo Orders (Express)",
-        data: [null, null, null, null, null, 200, 240, 280], // Forecasted data (only last 3 months)
-        borderColor: "#4caf50", // Color for actual data
-        backgroundColor: "rgba(76, 175, 80, 0.2)",
-        tension: 0.4,
-        fill: true,
-        borderDash: [5, 5], // Dashed line for forecast
-      },
-      {
-        label: "Warhousing Orders (Standard)",
-        data: [null, null, null, null, null, 180, 250, 280], // Forecasted data (only last 3 months)
-        borderColor: "#ff9800", // Color for actual data
-        backgroundColor: "rgba(255, 152, 0, 0.2)",
-        tension: 0.4,
-        fill: true,
-        borderDash: [5, 5], // Dashed line for forecast
-      },
-      {
-        label: "Courier and Cargo Orders",
-        data: [null, null, null, null, null, 160, 210, 240], // Forecasted data (only last 3 months)
-        borderColor: "#2196f3", // Color for actual data
-        backgroundColor: "rgba(33, 150, 243, 0.2)",
-        tension: 0.4,
-        fill: true,
-        borderDash: [5, 5], // Dashed line for forecast
       },
     ],
   };
@@ -323,6 +287,7 @@ const Dashboard = () => {
         <div className="card bg-base-100 shadow-md p-4">
           <h2 className="text-lg font-semibold mb-4">Industries Share</h2>
           <div className="relative h-72">
+            {" "}
             {/* Set uniform height */}
             <Doughnut
               data={doughnutData}
@@ -331,8 +296,9 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="card bg-base-100 shadow-md p-4">
-          <h2 className="text-lg font-semibold mb-4">Service Usage</h2>
+          <h2 className="text-lg font-semibold mb-4">Service Usage Analysis</h2>
           <div className="relative h-72">
+            {" "}
             {/* Set uniform height */}
             <Bar
               data={mixedBarData}
@@ -343,6 +309,7 @@ const Dashboard = () => {
         <div className="card bg-base-100 shadow-md p-4">
           <h2 className="text-lg font-semibold mb-4">Transportation Usage</h2>
           <div className="relative h-72">
+            {" "}
             {/* Set uniform height */}
             <PolarArea
               data={polarAreaData}
@@ -351,10 +318,9 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="card bg-base-100 shadow-md p-4">
-          <h2 className="text-lg font-semibold mb-4">
-            Order Trends (Forecast)
-          </h2>
+          <h2 className="text-lg font-semibold mb-4">Order Trends</h2>
           <div className="relative h-72">
+            {" "}
             {/* Set uniform height */}
             <Line
               data={lineChartData}
