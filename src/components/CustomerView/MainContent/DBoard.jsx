@@ -143,7 +143,7 @@ const Dashboard = () => {
         fill: true,
       },
       {
-        label: "Courier and Cargo Orders (Express)",
+        label: "Courier and Cargo Orders (Forecast)",
         data: [null, null, null, null, null, 200, 240, 280], // Forecasted data (only last 3 months)
         borderColor: "#4caf50", // Color for actual data
         backgroundColor: "rgba(76, 175, 80, 0.2)",
@@ -152,7 +152,7 @@ const Dashboard = () => {
         borderDash: [5, 5], // Dashed line for forecast
       },
       {
-        label: "Warhousing Orders (Standard)",
+        label: "Warhousing Orders (Forecast)",
         data: [null, null, null, null, null, 180, 250, 280], // Forecasted data (only last 3 months)
         borderColor: "#ff9800", // Color for actual data
         backgroundColor: "rgba(255, 152, 0, 0.2)",
@@ -161,7 +161,7 @@ const Dashboard = () => {
         borderDash: [5, 5], // Dashed line for forecast
       },
       {
-        label: "Courier and Cargo Orders",
+        label: "Transporting Orders (Forecast)",
         data: [null, null, null, null, null, 160, 210, 240], // Forecasted data (only last 3 months)
         borderColor: "#2196f3", // Color for actual data
         backgroundColor: "rgba(33, 150, 243, 0.2)",
