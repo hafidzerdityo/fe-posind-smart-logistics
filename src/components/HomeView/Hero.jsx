@@ -7,7 +7,9 @@ const Hero = () => {
         <div className="hero-content text-center max-w-2xl mx-auto py-10">
           <div>
             {/* First paragraph */}
-            <h1 className="text-5xl font-bold mb-4">PosIND Smart Logistics</h1>
+            <h1 className="text-5xl font-bold mb-4">
+              PosIND Smart Logistics (Plastic)
+            </h1>
             <p className="text-xl font-semibold">
               Maintain the functionality of your product during its useful
               lifetime with PosIND Supply Chain.
